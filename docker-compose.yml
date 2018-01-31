@@ -1,19 +1,19 @@
 version: '3'
 services:
-  gekko:
-    restart: always
-    build: ./
-    volumes:
-      - ./volumes/gekko/history:/usr/src/app/history
-      - ./config.js:/usr/src/app/config.js
-    links:
-      - redis
-#      - postgresql
-    environment:
-     - HOST
-     - PORT
-    ports: # you can comment this out when using the nginx frontend
-      - "${PORT}:${PORT}"
+#   gekko:
+#     restart: always
+#     build: ./
+#     volumes:
+#       - ./volumes/gekko/history:/usr/src/app/history
+#       - ./config.js:/usr/src/app/config.js
+#     links:
+#       - redis
+# #      - postgresql
+#     environment:
+#      - HOST
+#      - PORT
+#     ports: # you can comment this out when using the nginx frontend
+#       - "${PORT}:${PORT}"
 ## optionally set nginx vars if you wish to frontend it with nginx
 #    environment:
 #     - VIRTUAL_HOST=gekko
@@ -22,6 +22,8 @@ services:
 
   redis:
     image: redis:latest
+    ports:
+     - 6379:6379
     volumes:
       - ./volumes/redis:/data
 ## optionally uncomment if you wish to use nginx as a frontend

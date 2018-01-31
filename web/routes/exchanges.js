@@ -11,7 +11,7 @@ config.silent = false;
 
 util.setConfig(config);
 
-module.exports = function *() {
+module.exports = function*() {
   const exchangesDir = yield fs.readdir(gekkoRoot + 'exchanges');
   const exchanges = exchangesDir
     .filter(f => _.last(f, 3).join('') === '.js')
@@ -19,12 +19,13 @@ module.exports = function *() {
 
   let allCapabilities = [];
 
-  exchanges.forEach(function (exchange) {
+  exchanges.forEach(function(exchange) {
     let Trader = null;
 
     try {
       Trader = require(gekkoRoot + 'exchanges/' + exchange);
     } catch (e) {
+      console.log(e);
       return;
     }
 
@@ -36,4 +37,4 @@ module.exports = function *() {
   });
 
   this.body = allCapabilities;
-}
+};
