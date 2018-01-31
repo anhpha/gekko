@@ -1,19 +1,19 @@
 version: '3'
 services:
-#   gekko:
-#     restart: always
-#     build: ./
-#     volumes:
-#       - ./volumes/gekko/history:/usr/src/app/history
-#       - ./config.js:/usr/src/app/config.js
-#     links:
-#       - redis
-# #      - postgresql
-#     environment:
-#      - HOST
-#      - PORT
-#     ports: # you can comment this out when using the nginx frontend
-#       - "${PORT}:${PORT}"
+  gekko:
+    restart: always
+    build: ./
+    volumes:
+      - ./volumes/gekko/history:/usr/src/app/history
+      - ./config.js:/usr/src/app/config.js
+    links:
+      - redis
+      - postgresql
+    environment:
+     - HOST
+     - PORT
+    ports: # you can comment this out when using the nginx frontend
+      - "${PORT}:${PORT}"
 ## optionally set nginx vars if you wish to frontend it with nginx
 #    environment:
 #     - VIRTUAL_HOST=gekko
@@ -25,7 +25,7 @@ services:
     ports:
      - 6379:6379
     volumes:
-      - ./volumes/redis:/data
+      - redis-data:/data
 ## optionally uncomment if you wish to use nginx as a frontend
 #  nginx:
 #    restart: always
@@ -35,14 +35,17 @@ services:
 #    volumes:
 #     - /var/run/docker.sock:/tmp/docker.sock:ro
 ## optionally uncomment if you wish to use postgresql as a db
-#  postgresql:
-#    restart: always
-#    image: postgres:9.6-alpine
-#    ports:
-#      - 5432:5432
-#    volumes:
-#      - ./_postgresql:/var/lib/postgresql/data:rw
-#    environment:
-#      POSTGRES_DB: gekko
-#      POSTGRES_USER: username
-#      POSTGRES_PASSWORD: password
+  postgresql:
+   restart: always
+   image: postgres:9.6-alpine
+   ports:
+     - 5432:5432
+   volumes:
+     - postgre-data:/var/lib/postgresql/data:rw
+   environment:
+     POSTGRES_DB: gekko
+     POSTGRES_USER: username
+     POSTGRES_PASSWORD: password
+volumes:
+  redis-data:
+  postgre-data:

@@ -204,7 +204,7 @@ Trader.prototype.getTrades = function(since, callback, descending) {
 
   var args = _.toArray(arguments);
   var process = function(err, result) {
-    if (err) {
+    if (err || !Array.isArray(result)) {
       return this.retry(this.getTrades, args);
     }
 

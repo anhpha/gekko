@@ -22,9 +22,11 @@ function joinCurrencies(currencyA, currencyB) {
 Fetcher.prototype.getTrades = function(range, callback) {
   var args = _.toArray(arguments);
   var process = function(err, result) {
-    console.log('HitBtc trade error:', err, result);
-    if (err || result.error) return this.retry(this.getTrades, args);
-    console.log('HitBtc trade:', result);
+    if (err || result.error || !Array.isArray(result)) {
+      console.log('HitBtc trade error:', err, result);
+      return this.retry(this.getTrades, args);
+    }
+    // console.log('HitBtc trade:', result);
     if (_.size(result) === 50000) {
       // to many trades..
       util.die('too many trades..');

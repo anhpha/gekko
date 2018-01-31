@@ -27,6 +27,19 @@ config.trader = {
   orderUpdateDelay: 1, // Number of minutes to adjust unfilled order prices
 };
 
+config.redisBeacon = {
+  enabled: false,
+  port: 6379, // redis default
+  host: 'redis', // localhost
+  // On default Gekko broadcasts
+  // events in the channel with
+  // the name of the event, set
+  // an optional prefix to the
+  // channel name.
+  channelPrefix: '',
+  broadcast: ['candle'],
+};
+
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //                       CONFIGURING ADAPTER
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -51,8 +64,8 @@ config.sqlite = {
 config.postgresql = {
   path: 'plugins/postgresql',
   version: 0.1,
-  connectionString: 'postgres://user:pass@localhost:5432', // if default port
-  database: null, // if set, we'll put all tables into a single database.
+  connectionString: 'postgres://username:password@postgresql:5432', // if default port
+  database: 'gekko', // if set, we'll put all tables into a single database.
   schema: 'public',
   dependencies: [
     {
