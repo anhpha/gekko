@@ -30,7 +30,7 @@ config.trader = {
 config.redisBeacon = {
   enabled: false,
   port: 6379, // redis default
-  host: 'redis', // localhost
+  host: 'localhost', // localhost
   // On default Gekko broadcasts
   // events in the channel with
   // the name of the event, set
@@ -64,7 +64,7 @@ config.sqlite = {
 config.postgresql = {
   path: 'plugins/postgresql',
   version: 0.1,
-  connectionString: 'postgres://username:password@postgresql:5432', // if default port
+  connectionString: 'postgres://username:password@localhost:5432', // if default port
   database: 'gekko', // if set, we'll put all tables into a single database.
   schema: 'public',
   dependencies: [
