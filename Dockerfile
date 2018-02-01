@@ -8,14 +8,12 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # Install GYP dependencies globally, will be used to code build other dependencies
-RUN npm install -g --production node-gyp && \
-    npm cache clean --force
+RUN yarn global add node-gyp
 
 # Install app dependencies
 COPY package.json /usr/src/app
-RUN npm install --production && \
-    npm install --production redis@0.10.0 talib@1.0.2 tulind@0.8.7 pg && \
-    npm cache clean --force
+RUN yarn install && \
+    yarn add redis talib tulind pg
 
 # Bundle app source
 COPY . /usr/src/app
@@ -25,4 +23,4 @@ RUN chmod +x /usr/src/app/docker-entrypoint.sh
 ENTRYPOINT ["/usr/src/app/docker-entrypoint.sh"]
 
 
-CMD [ "npm", "start" ]
+CMD [ "yarn", "start" ]
