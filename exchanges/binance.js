@@ -255,7 +255,10 @@ Trader.prototype.getOrder = function(order, callback) {
 
     var price = parseFloat(data.price);
     var amount = parseFloat(data.executedQty);
-    var date = moment.unix(data.time);
+    
+    // Data.time is a 13 digit millisecon unix time stamp.
+    // https://momentjs.com/docs/#/parsing/unix-timestamp-milliseconds/ 
+    var date = moment(data.time);
 
     callback(undefined, { price, amount, date });
   }.bind(this);
@@ -301,7 +304,7 @@ Trader.prototype.cancelOrder = function(order, callback) {
   var cancel = function(err, data) {
     log.debug(`[binance.js] entering "cancelOrder" callback after api call, err ${err} data: ${JSON.stringify(data)}`);
     if (err) {
-      if(_.get(data, 'msg') === 'UNKNOWN_ORDER') {  // this seems to be the response we get when an order was filled
+      if(data && data.msg === 'UNKNOWN_ORDER') {  // this seems to be the response we get when an order was filled
         return callback(true); // tell the thing the order was already filled
       }
       return callback(err);
