@@ -135,22 +135,24 @@ method.buyOnMACDCross = function(candle) {
       this.macdTrend.persisted = true;
     }
 
-    // log.debug(
-    //   '**** MACD on High',
-    //   this.macdTrend.duration,
-    //   'candle(s):',
-    //   candle.close,
-    //   '- Time: ',
-    //   candle.start,
-    //   '- Open <= CLose: ',
-    //   candle.open <= candle.close,
-    //   '- Persited: ',
-    //   this.macdTrend.persisted,
-    //   '- Adviced: ',
-    //   this.macdTrend.adviced,
-    //   '- Increase EMA: ',
-    //   this.maxMACDShortAfterUp - this.indicators.macd.diff
-    // );
+    log.debug(
+      '**** MACD on High',
+      this.macdTrend.duration,
+      'candle(s):',
+      candle.close,
+      '- Time: ',
+      candle.start,
+      '- Open <= CLose: ',
+      candle.open <= candle.close,
+      '- Persited: ',
+      this.macdTrend.persisted,
+      '- Adviced: ',
+      this.macdTrend.adviced,
+      '- Increase EMA: ',
+      this.maxMACDShortAfterUp - this.indicators.macd.diff,
+      '- MACD signsl: ',
+      this.indicators.macd.signal.result
+    );
     // log.debug('- RSI Vals: ', this.rsis);
     if (
       this.trend.buy == 0 &&
@@ -161,8 +163,9 @@ method.buyOnMACDCross = function(candle) {
       candle.close >= candle.open &&
       !this.IsAtTooHigh(this.lastCandle, this.currentCandle) &&
       this.maxMACDShortAfterUp == this.indicators.macd.diff &&
-      this.maxRSIAfterMACDUp == this.indicators.rsi.result &&
-      !this.macdTrend.sellOnHigh
+      // this.maxRSIAfterMACDUp == this.indicators.rsi.result &&
+      !this.macdTrend.sellOnHigh &&
+      this.indicators.macd.signal.result < this.settings.macd.signalhigh
     ) {
       log.debug(
         '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Buy on MACD cross',
@@ -170,7 +173,9 @@ method.buyOnMACDCross = function(candle) {
         'candle(s):',
         candle.close,
         '- Time: ',
-        candle.start
+        candle.start,
+        '- MACD signsl: ',
+        this.indicators.macd.signal.result
       );
       // log.debug('- MACD Vals: ', this.macdVals);
       // log.debug('- RSI Vals: ', this.rsis);

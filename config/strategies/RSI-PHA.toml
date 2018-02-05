@@ -20,6 +20,7 @@ up = 0.025
 short = 5
 long = 26
 signal = 9
+signalhigh = -30
 down = -0.0025
 up = 0.025
 persistence = 2

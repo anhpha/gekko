@@ -13,6 +13,13 @@ config.debug = true;
 //                       CONFIGURING TRADING ADVICE
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+config.watch = {
+  // You can set your own tickrate (refresh rate).
+  // If you don't set it, the defaults are 2 sec for
+  // okcoin and 20 sec for all other exchanges.
+  tickrate: 10,
+};
+
 config.tradingAdvisor = {};
 
 config.candleWriter = {
